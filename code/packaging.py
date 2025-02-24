@@ -30,6 +30,14 @@ def parse_packaging(packaging_data: str) -> list[dict]:
         # Store the extracted item first
         final_list.append({item: quantity})
 
+        # If there's a second part (packaging level), extract it
+        if len(items) > 1:
+            packaging_quantity, packaging = items[1].split(" ", 1)
+            packaging_quantity = int(packaging_quantity)
+
+            # Only store packaging if it's the last level (not an intermediate step)
+            if i == len(parts) - 1:
+                final_list.append({packaging: packaging_quantity})
 def calc_total_units(package: list[dict]) -> int:
     '''
     This function calculates the total number of items in a package
