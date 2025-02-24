@@ -38,6 +38,8 @@ def parse_packaging(packaging_data: str) -> list[dict]:
             # Only store packaging if it's the last level (not an intermediate step)
             if i == len(parts) - 1:
                 final_list.append({packaging: packaging_quantity})
+                
+    return final_list
 def calc_total_units(package: list[dict]) -> int:
     '''
     This function calculates the total number of items in a package
