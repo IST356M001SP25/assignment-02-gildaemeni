@@ -20,6 +20,15 @@ def parse_packaging(packaging_data: str) -> list[dict]:
     '''
     final_list = []
     parts = packaging_data.split(' / ')
+    for i, part in enumerate(parts):  # Loop through each packaging description
+        items = part.strip().split(" in ")  # Step 2: Split on " in "
+        
+        # Extract the item name and quantity
+        quantity, item = items[0].split(" ", 1)
+        quantity = int(quantity)
+
+        # Store the extracted item first
+        final_list.append({item: quantity})
 
 def calc_total_units(package: list[dict]) -> int:
     '''
