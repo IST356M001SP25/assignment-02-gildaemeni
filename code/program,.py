@@ -44,3 +44,9 @@ with open("data/packaging.txt", "r") as f:
         
         results.append(f"{line} => total units: {package_total} {unit}")
         packages.append(package)
+        
+# Print results
+print("\n".join(results))
+# Save to JSON file
+with open("data/packaging.json", "w") as f:
+    json.dump(packages, f, indent=4)
