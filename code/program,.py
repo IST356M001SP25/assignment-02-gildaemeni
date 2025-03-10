@@ -26,4 +26,14 @@ Example:
     ]    
 '''
 
-# TODO: Write code
+import json
+from packaging import parse_packaging, calc_total_units, get_unit
+
+packages = []
+results = []
+
+with open("data/packaging.txt", "r") as f:
+    for line in f:
+        line = line.strip()
+        if not line:
+            continue  # Skip empty lines
