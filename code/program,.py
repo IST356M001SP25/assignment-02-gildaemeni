@@ -41,3 +41,6 @@ with open("data/packaging.txt", "r") as f:
         package = parse_packaging(line)
         package_total = calc_total_units(package)
         unit = get_unit(package)
+        
+        results.append(f"{line} => total units: {package_total} {unit}")
+        packages.append(package)
