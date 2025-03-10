@@ -37,3 +37,7 @@ with open("data/packaging.txt", "r") as f:
         line = line.strip()
         if not line:
             continue  # Skip empty lines
+        
+        package = parse_packaging(line)
+        package_total = calc_total_units(package)
+        unit = get_unit(package)
