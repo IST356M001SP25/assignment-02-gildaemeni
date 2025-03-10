@@ -18,28 +18,21 @@ def parse_packaging(packaging_data: str) -> list[dict]:
     input: "20 pieces in 1 pack / 10 packs in 1 carton / 4 cartons in 1 box"
     output: [{ 'pieces' : 20}, {'packs' : 10}, {'carton' : 4}, {'box' : 1}]
     '''
-    final_list = []
-    parts = packaging_data.split(' / ')
-    for i, part in enumerate(parts):  # Loop through each packaging description
-        items = part.strip().split(" in ")  # Step 2: Split on " in "
-        
-        # Extract the item name and quantity
-        quantity, item = items[0].split(" ", 1)
-        quantity = int(quantity)
+    package = []  # Initialize an empty list
+    # **Split packaging data into separate parts**
+    parts = [part.strip() for part in packaging_data.split('/')]
 
-        # Store the extracted item first
-        final_list.append({item: quantity})
+    for part in parts:
+        first_part = part.split(" in ")[0]  # Get the first item
+        quantity, item = first_part.split(" ", 1)  # Extract quantity & item name
+        package.append({item.strip(): int(quantity)})  # Append to list
+    
+    last_section = parts[-1].split(" in ")[-1]  # Get the last section after "in"
+    last_quantity, last_packaging = last_section.split(" ", 1)  # Split last quantity & item
+    package.append({last_packaging.strip(): int(last_quantity)})  # Append last packaging level
+    
+    return package
 
-        # If there's a second part (packaging level), extract it
-        if len(items) > 1:
-            packaging_quantity, packaging = items[1].split(" ", 1)
-            packaging_quantity = int(packaging_quantity)
-
-            # Only store packaging if it's the last level (not an intermediate step)
-            if i == len(parts) - 1:
-                final_list.append({packaging: packaging_quantity})
-                
-    return final_list
 def calc_total_units(package: list[dict]) -> int:
     '''
     This function calculates the total number of items in a package
